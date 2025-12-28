@@ -262,3 +262,20 @@ All colors MUST be HSL.
 
 
 
+ /* propular product slider card*/
+
+ .productItem{
+  line-height: 22px;
+ }
+
+ .productslider .swiper-wrapper{
+  padding:15px;
+  margin-left:-15px;
+  margin-right:-15px;
+ }
+
+ .productItem .actions{
+  
+ }
+
+

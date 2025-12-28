@@ -26,6 +26,7 @@ import { latestProducts } from "@/data/latestProducts";
 import { electronicsProducts } from "@/data/electronicsProducts";
 import { groceriesProducts } from "@/data/groceriesProducts";
 import { fashionProducts } from "@/data/fashionProducts";
+import PopularProductSlide from "@/components/PopularProductSlider";
 
 const Index = () => {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -166,13 +167,15 @@ const Index = () => {
 
 
         {/* Popular Products */}
-        <ProductSection
+        {/* <ProductSection
           title="Popular Products"
           icon="🔥"
           products={popularProducts}
           onQuickView={handleQuickView}
           onAddToCart={handleAddToCart}
-        />
+        /> */}
+
+        <PopularProductSlide />
 
         {/* Latest Products - Special Layout */}
         <section className="py-8">

@@ -5,9 +5,6 @@ import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import Product360View from "./Product360View";
 
-
-
-
 // images for card
 import img1 from "../assets/product1.1.jpg"
 import img1second from "../assets/product1.2.jpg"
@@ -30,31 +27,29 @@ const ProductCard = ({ product, onQuickView, onAddToCart }: ProductCardProps) =>
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [is360ViewOpen, setIs360ViewOpen] = useState(false);
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
 
-  const handleWishlist = () => {
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsWishlisted(!isWishlisted);
     toast.success(isWishlisted ? "Removed from wishlist" : "Added to wishlist");
   };
 
-  const handleShare = () => {
+  const handleShare = (e: React.MouseEvent) => {
+    e.stopPropagation();
     toast.success("Link copied to clipboard!");
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-    setRotation({ x: rotateX, y: rotateY });
-  };
+  const handle360View = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIs360ViewOpen(true);
+  }
+
+  const handleQuickView = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onQuickView(product)
+  }
 
   const handleMouseLeave = () => {
-    setRotation({ x: 0, y: 0 });
     setIsHovered(false);
   };
 
@@ -80,6 +75,7 @@ const staticProducts = Array.from({ length: 20 }, (_, i) => ({
         className="group relative overflow-hidden cursor-pointer rounded-xl border shadow-lg hover:shadow-xl transition-all duration-300 bg-card"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
+        onClick={() => onQuickView(product)}
       >
         {/* Image Container */}
         <div className="relative aspect-square overflow-hidden bg-muted">
@@ -120,7 +116,7 @@ const staticProducts = Array.from({ length: 20 }, (_, i) => ({
               className={`h-9 w-9 rounded-full shadow-md transition-all duration-300 ${isHovered ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                 }`}
               style={{ transitionDelay: isHovered ? "200ms" : "0ms" }}
-              onClick={() => setIs360ViewOpen(true)}
+              onClick={handle360View}
             >
               <RotateCw className="h-4 w-4" />
             </Button>
@@ -131,7 +127,7 @@ const staticProducts = Array.from({ length: 20 }, (_, i) => ({
               className={`h-9 w-9 rounded-full shadow-md transition-all duration-300 ${isHovered ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                 }`}
               style={{ transitionDelay: isHovered ? "300ms" : "0ms" }}
-              onClick={() => onQuickView(product)}
+              onClick={handleQuickView}
             >
               <Eye className="h-4 w-4" />
             </Button>
@@ -188,7 +184,10 @@ const staticProducts = Array.from({ length: 20 }, (_, i) => ({
           {/* Add to Cart Button */}
           <Button
             className="w-full"
-            onClick={() => onAddToCart(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart(product)
+            }}
           >
             Add to Cart
           </Button>

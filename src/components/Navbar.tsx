@@ -21,7 +21,8 @@ import {
   ChevronRight,
   LogIn,
   OrbitIcon,
-  ClipboardCheck
+  ClipboardCheck,
+  Menu
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -41,15 +42,15 @@ interface NavbarProps {
 }
 
 const categories = [
-  { name: "Electronics", icon: Smartphone },
-  { name: "Fashion", icon: Shirt },
-  { name: "Groceries", icon: ShoppingBasket },
-  { name: "Appliances", icon: Plug },
-  { name: "Books", icon: BookOpen },
-  { name: "Sports", icon: Dumbbell },
-  { name: "Home & Living", icon: Home },
-  { name: "Beauty", icon: Sparkles },
-  { name: "JSA Report", icon: ClipboardCheck, link: "/jsa-report" },
+  { name: "Electronics", icon: Smartphone, hasMegaMenu: true, link: "/products?category=electronics" },
+  { name: "Fashion", icon: Shirt, hasMegaMenu: true, link: "/products?category=fashion" },
+  { name: "Groceries", icon: ShoppingBasket, hasMegaMenu: true, link: "/products?category=groceries" },
+  { name: "Appliances", icon: Plug, hasMegaMenu: true, link: "/products?category=appliances" },
+  { name: "Books", icon: BookOpen, hasMegaMenu: true, link: "/products?category=books" },
+  { name: "Sports", icon: Dumbbell, hasMegaMenu: true, link: "/products?category=sports" },
+  { name: "Home & Living", icon: Home, hasMegaMenu: true, link: "/products?category=home-living" },
+  { name: "Beauty", icon: Sparkles, hasMegaMenu: true, link: "/products?category=beauty" },
+  
 ];
 
 const Navbar = ({ cartCount, onCartClick }: NavbarProps) => {
@@ -446,7 +447,7 @@ const Navbar = ({ cartCount, onCartClick }: NavbarProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="hidden lg:flex items-center justify-center gap-1 py-3"
+            className="hidden flex-wrap  lg:flex items-center justify-center  py-3"
           >
             {categories.map((category, index) => {
               const Icon = category.icon;

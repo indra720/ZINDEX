@@ -25,15 +25,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import ChatbotWidget from "@/components/ChatbotWidget";
 import BackButton from "@/components/BackButton";
+import AdvancedQuickView from "@/components/AdvancedQuickView";
 
 type Category = "fashion" | "groceries";
 
@@ -171,10 +166,10 @@ const Products = () => {
     }));
   };
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, quantity: number = 1) => {
     toast({
       title: "Added to Cart",
-      description: `${product.name} has been added to your cart.`,
+      description: `${quantity} x ${product.name} has been added to your cart.`,
     });
   };
 
@@ -452,81 +447,12 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Quick View Modal */}
-      <Dialog
-        open={!!quickViewProduct}
-        onOpenChange={() => setQuickViewProduct(null)}
-      >
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>{quickViewProduct?.name}</DialogTitle>
-          </DialogHeader>
-          {quickViewProduct && (
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="aspect-square bg-muted rounded-lg overflow-hidden">
-                <img
-                  src={quickViewProduct.image}
-                  alt={quickViewProduct.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    <span className="font-semibold">
-                      {quickViewProduct.rating}
-                    </span>
-                  </div>
-                  <span className="text-muted-foreground">
-                    ({quickViewProduct.reviews} reviews)
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-3xl font-bold">
-                    ${quickViewProduct.price}
-                  </span>
-                  {quickViewProduct.originalPrice && (
-                    <span className="text-xl text-muted-foreground line-through">
-                      ${quickViewProduct.originalPrice}
-                    </span>
-                  )}
-                </div>
-
-                {quickViewProduct.sizes && (
-                  <div className="mb-6">
-                    <h3 className="font-medium mb-3">Select Size</h3>
-                    <div className="flex gap-2">
-                      {quickViewProduct.sizes.map((size) => (
-                        <Button
-                          key={size}
-                          variant={selectedSize === size ? "default" : "outline"}
-                          onClick={() => setSelectedSize(size)}
-                        >
-                          {size}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <Button
-                  size="lg"
-                  className="w-full"
-                  onClick={() => {
-                    addToCart(quickViewProduct);
-                    setQuickViewProduct(null);
-                  }}
-                >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      <AdvancedQuickView
+        isOpen={!!quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+        product={quickViewProduct}
+        onAddToCart={addToCart}
+      />
 
       {/* Chatbot Widget */}
       <ChatbotWidget />
