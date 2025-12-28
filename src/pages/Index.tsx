@@ -27,6 +27,7 @@ import { electronicsProducts } from "@/data/electronicsProducts";
 import { groceriesProducts } from "@/data/groceriesProducts";
 import { fashionProducts } from "@/data/fashionProducts";
 import PopularProductSlide from "@/components/PopularProductSlider";
+import HeroSection from "@/components/HeroSlider";
 
 const Index = () => {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -84,7 +85,8 @@ const Index = () => {
 
       <main className="container mx-auto px-4 py-6 space-y-12">
         {/* Hero Section */}
-        <HeroSlider />
+        {/* <HeroSlider /> */}
+        <HeroSection/>
 
         <Category />
 
